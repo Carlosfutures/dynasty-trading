@@ -1,16 +1,16 @@
+const cors = require('cors');
 const express = require('express');
 const path = require('path');
 const app = express();
 
+app.use(cors()); // ✅ Allows requests from frontend
 app.use(express.json());
 
-// API routes
+// Routes
 app.use('/api/trades', require('./routes/trades'));
 
-// ✅ Serve React static files from client/build
+// Serve React build if deployed
 app.use(express.static(path.join(__dirname, '../client/build')));
-
-// ✅ Fallback to React index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
